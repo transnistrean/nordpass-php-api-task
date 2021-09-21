@@ -31,14 +31,15 @@ class ItemServiceTest extends TestCase
 
     public function testCreate(): void
     {
-        /** @var User */
+        /** @var $user User */
         $user = $this->createMock(User::class);
         $data = 'secret data';
 
+        /** @var $expectedObject Item*/
         $expectedObject = new Item();
         $expectedObject->setUser($user);
 
-        $this->entityManager->expects($this->once())->method('persist')->with($expectedObject);
+        $this->entityManager->expects($this->once())->method('persist')->will($this->returnValue($expectedObject));
 
         $this->itemService->create($user, $data);
     }
