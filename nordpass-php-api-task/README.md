@@ -17,6 +17,27 @@ make tests
 * User: john
 * Password: maxsecure
 
+### Update Item endpoint
+
+POST http://secure-storage.localhost:8000/item?_method=PUT
+
+#### Request Headers
+* Host: secure-storage.localhost:8000
+* Accept-Encoding: gzip, deflate, br
+* Connection: keep-alive
+* Content-Type: multipart/form-data; boundary=--------------------------160761595698873230673420
+* Content-Length: 265
+### Request Body
+* id: "1"
+* data: ""test""
+
+### Response:
+HTTP status 200
+
+400 BAD_REQUEST Bad Request
+* Content-Type: [application/json]
+* Content-Length: []
+
 ### Postman requests collection
 
 You can import all available API calls to Postman using `postman_collection.json` file
