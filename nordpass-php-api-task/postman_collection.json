@@ -118,7 +118,7 @@
 		{
 			"name": "Update Item",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
@@ -130,13 +130,13 @@
 						},
 						{
 							"key": "data",
-							"value": "new secret",
+							"value": "huraaaaa",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://secure-storage.localhost:8000/item",
+					"raw": "http://secure-storage.localhost:8000/item?_method=PUT",
 					"protocol": "http",
 					"host": [
 						"secure-storage",
@@ -145,6 +145,12 @@
 					"port": "8000",
 					"path": [
 						"item"
+					],
+					"query": [
+						{
+							"key": "_method",
+							"value": "PUT"
+						}
 					]
 				}
 			},

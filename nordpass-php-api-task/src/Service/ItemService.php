@@ -24,4 +24,9 @@ class ItemService
         $this->entityManager->persist($item);
         $this->entityManager->flush();
     }
+
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+    }
 } 

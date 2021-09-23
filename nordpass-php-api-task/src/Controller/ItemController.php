@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Form\ItemType;
 use App\Service\ItemService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -71,6 +72,45 @@ class ItemController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($item);
         $manager->flush();
+
+        return $this->json([]);
+    }
+
+    /**
+     * @Route("/item", name="item_update", methods={"PUT"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function update(Request $request, ItemService $itemService)
+    {
+        $id = $request->get('id');
+
+        if (empty($id)) {
+            return $this->json(['error' => 'No id parameter'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $data = $request->get('data');
+
+        if (empty($data)) {
+            return $this->json(['error' => 'No data parameter'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $item = $this->getDoctrine()->getRepository(Item::class)->find($id);
+
+        $form = $this->createForm(ItemType::class, $item);
+
+        $form->submit(['id' => $id, 'data' => $data]);
+
+        if (false === $form->isValid()) {
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $form->getData()
+                ],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
+        }
+
+        $itemService->flush();
 
         return $this->json([]);
     }
